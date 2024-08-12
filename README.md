@@ -30,9 +30,55 @@ kubectl create namespace hello
  kubectl get pods -n hello
  kubectl get services -n hello
 
- ### 3. check the output
+ ### 5. check the output
  minikube dashboard
- 
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Tomcat Deployment on Kubernetes
+
+This repository contains the Kubernetes configuration files for deploying a Tomcat server with a custom web application. Follow the instructions below to set up and manage the Tomcat deployment in a Kubernetes cluster.
+
+## Prerequisites
+
+- Kubernetes cluster
+- `kubectl` command-line tool
+- Docker (for building and pushing images)
+- DockerHub account (if using a private image repository)
+
+## Directory Structure
+
+/tomcat
+├── tomcat-deployment.yaml
+├── Dockerfile
+├── your-application.war
+└── README.md
+
+### 1. Build and Push Docker Image
+
+First, build the Docker image for the tomcat application and push it to DockerHub.
+
+``
+docker build -t pramila188/tomcat1 .
+docker push pramila188/tomcat1
+
+### 2. create namespace
+kubectl create namespace tomcat
+
+
+### 3. kubernetes deployment
+create tomcat-deployment.yaml and applying the configuration
+
+Apply the deployment and service:
+kubectl apply -f tomcat-deployment.yaml -n tomcat
+
+Verify the status of the pods and service:
+kubectl get pods -n tomcat
+kubectl get services -n tomcat
+
+### 4. check output
+minikube dashboard
+
+
 
 
 
