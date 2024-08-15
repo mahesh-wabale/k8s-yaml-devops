@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ResourceQuota
 metadata:
   name: tomcat-resource-quota
-  namespace: tomcat1
+  namespace: tomcat
 spec:
   hard:
     requests.cpu: "500m"           # Maximum total CPU requests for the namespace
