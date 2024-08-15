@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: tomcat-config
-  namespace: tomcat1
+  namespace: tomcat
 data:
   server.xml: |
     <Server port="8005" shutdown="SHUTDOWN">
