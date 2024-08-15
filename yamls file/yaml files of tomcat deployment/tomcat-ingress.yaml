@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: tomcat-ingress
-  namespace: tomcat1
+  namespace: tomcat
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
