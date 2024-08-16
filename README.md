@@ -53,7 +53,7 @@ This repository contains the Kubernetes configuration files for deploying a Tomc
 ├── your-application.war
 └── README.md
 
-### 1. Build and Push Docker Image
+###  Build and Push Docker Image
 
 First, build the Docker image for the tomcat application and push it to DockerHub.
 
@@ -61,21 +61,76 @@ First, build the Docker image for the tomcat application and push it to DockerHu
 docker build -t pramila188/tomcat1 .
 docker push pramila188/tomcat1
 
-### 2. create namespace
+###  create namespace
 kubectl create namespace tomcat
 
 
-### 3. kubernetes deployment
-create tomcat-deployment.yaml and applying the configuration
+### 1. kubernetes deployment
+   create tomcat-deployment.yaml and applying the configuration
+## Kubernetes Resources
 
+### 2. ResourceQuota
+
+The `ResourceQuota` limits the resources that the Tomcat application can use in the `tomcat1` namespace.
+
+- **File:** `tomcat-resource-quota.yaml`
+- **Quota Summary:**
+  - CPU Requests: 1 core
+  - Memory Requests: 2Gi
+  - CPU Limits: 2 cores
+  - Memory Limits: 4Gi
+  - Pods: 10
+  - Services: 5
+  - ConfigMaps: 10
+  - Secrets: 10
+
+### 3. Ingress
+
+The `Ingress` resource provides external access to the Tomcat application.
+
+- **File:** `tomcat-ingress.yaml`
+- **Host:** `tomcat.example.com`
+- **TLS Secret:** `tomcat-tls`
+
+### 4. Secrets
+
+The `Secrets` resource stores sensitive data, such as credentials for the Tomcat admin interface.
+
+- **File:** `tomcat-secret.yaml`
+- **Data Stored:**
+  - `username` (Base64 encoded)
+  - `password` (Base64 encoded)
+
+### 5. ConfigMap
+
+The `ConfigMap` contains configuration data for the Tomcat application, such as `server.xml` and `logging.properties`.
+
+- **File:** `tomcat-configmap.yaml`
+- **Config Files:**
+  - `server.xml`
+  - `logging.properties`
+
+### 6. ServiceAccount
+
+The `ServiceAccount` provides an identity for processes running in the Tomcat pod.
+
+- **File:** `tomcat-service-account.yaml`
+
+## Deployment
+kubectl apply -f tomcat-resource-quota.yaml
 Apply the deployment and service:
 kubectl apply -f tomcat-deployment.yaml -n tomcat
+kubectl apply -f tomcat-service-account.yaml
+kubectl apply -f tomcat-configmap.yaml
+kubectl apply -f tomcat-secret.yaml
+kubectl apply -f tomcat-ingress.yaml
+
 
 Verify the status of the pods and service:
 kubectl get pods -n tomcat
 kubectl get services -n tomcat
 
-### 4. check output
+###  check output
 minikube dashboard
 
 
