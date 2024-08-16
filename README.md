@@ -11,7 +11,7 @@ This project demonstrates the deployment of a Spring Boot application named `tes
 
 ## Steps to Deploy
 
-### 1. Build and Push Docker Image
+### (1). Build and Push Docker Image
 
 First, build the Docker image for the Spring Boot application and push it to DockerHub.
 
@@ -19,18 +19,79 @@ First, build the Docker image for the Spring Boot application and push it to Doc
 docker build -t pramila188/testhello .
 docker push pramila188/testhello
 
-### 2. Create namespace
+### (2). Create namespace
 kubectl create namespace hello
 
-### 3.Create deployment.yaml and service.yaml file and  Deploy the application
+### (3).Create deployment.yaml and service.yaml file and  Deploy the application
+
+
+## (4).. Kubernetes Resources
+
+### 1. ResourceQuota
+
+The `ResourceQuota` limits the resources that the `testhello` application can use in the `hello` namespace.
+
+- **File:** `testhello-resource-quota.yaml`
+- **Quota Summary:**
+  - CPU Requests: 2 cores
+  - Memory Requests: 4Gi
+  - CPU Limits: 4 cores
+  - Memory Limits: 8Gi
+  - Pods: 20
+  - Services: 10
+  - ConfigMaps: 20
+  - Secrets: 20
+
+### 2. Ingress
+
+The `Ingress` resource provides external access to the `testhello` application.
+
+- **File:** `testhello-ingress.yaml`
+- **Host:** `testhello.example.com`
+- **TLS Secret:** `testhello-tls`
+
+### 3. Secrets
+
+The `Secrets` resource stores sensitive data, such as credentials for accessing external services or application configurations.
+
+- **File:** `testhello-secret.yaml`
+- **Data Stored:**
+  - `username` (Base64 encoded)
+  - `password` (Base64 encoded)
+
+### 4. ConfigMap
+
+The `ConfigMap` contains configuration data for the `testhello` Spring Boot application, such as properties files.
+
+- **File:** `testhello-config.yaml`
+- **Config Files:**
+  - `application.properties` (includes application-specific configuration)
+
+### 5. ServiceAccount
+
+The `ServiceAccount` provides an identity for processes running in the `testhello` pod.
+
+- **File:** `testhello-service-account.yaml`
+
+## Deployment
+
+To deploy the `testhello` Spring Boot application, follow these steps:
+
+ kubectl apply -f testhello-resource-quota.yaml -n hello
  kubectl apply -f deployment.yaml -n hello
  kubectl apply -f service.yaml -n hello
+ kubectl apply -f testhello-service-account.yaml -n hello
+ kubectl apply -f testhello-config.yaml
+ kubectl apply -f testhello-secret.yaml
+ kubectl apply -f testhello-ingress.yaml
 
- ### 4. verify the deployment 
+
+
+ ### (4). verify the deployment 
  kubectl get pods -n hello
  kubectl get services -n hello
 
- ### 5. check the output
+ ### (5). check the output
  minikube dashboard
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
