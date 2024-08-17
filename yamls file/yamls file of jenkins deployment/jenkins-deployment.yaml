@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jenkins
+  name: jenkins-deployment
   namespace: jenkins
   labels:
     app: jenkins
@@ -16,15 +16,9 @@ spec:
         app: jenkins
     spec:
       containers:
-      - name: jenkins
-        image: jenkins/jenkins:lts
+      - name: jenkins-container
+        image: jenkins/jenkins:latest
         ports:
         - containerPort: 8080
         - containerPort: 50000
-        volumeMounts:
-        - name: jenkins-data
-          mountPath: /var/jenkins_home
-      volumes:
-      - name: jenkins-data
-        persistentVolumeClaim:
-          claimName: jenkins-pvc
+     
