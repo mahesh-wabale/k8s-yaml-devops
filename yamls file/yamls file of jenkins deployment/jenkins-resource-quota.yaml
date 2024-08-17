@@ -5,11 +5,5 @@ metadata:
   namespace: jenkins
 spec:
   hard:
-    requests.cpu: "2"
-    requests.memory: "4Gi"
-    limits.cpu: "4"
-    limits.memory: "8Gi"
-    persistentvolumeclaims: "5"
-    pods: "10"
-    services: "5"
-    services.nodeports: "5"
+    pods: "1"
+    
