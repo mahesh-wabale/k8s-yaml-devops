@@ -194,6 +194,33 @@ kubectl get services -n tomcat
 ###  check output
 minikube dashboard
 
+# Jenkins deployment on kubernetes cluster
+create a file 
+1) jenkins-deployment.yaml
+2) jenkins-secrets.yaml
+3) jenkins-resourcequota.yaml
+4) jenkins-service.yaml
+
+Create namespace jenkins
+
+kubectl get ns | grep jenkins
+
+kubectl create -f jenkins-resourcequota.yaml
+kubectl create -f jenkins-deployment.yaml
+kubectl create -f jenkins-service.yaml
+kubectl create -f jenkins-configmap.yaml
+
+kubectl get pods -n jenkins
+kubectl logs jenkins-deployment (pods no) -n jenkins    This command show the passward of jenkins
+
+### check output
+ minikube dashboard
+
+## check output in browser
+minikube ip:Nodeport
+
+Then copy the above displying passward and paste into the administrator passward box
+Then fills the information..
 
 
 
